@@ -30,11 +30,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    static String ID;
+    static int frag_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        frag_no=1;
 
         //firebase auth
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
@@ -88,9 +91,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
 
             case R.id.time_outline:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentBegin).commit();
-                return true;
-
+                switch (frag_no){
+                    case 1:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentBegin).commit();
+                        return true;
+                    case 2:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentSession).commit();
+                        return true;
+                    case 3:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentFriend).commit();
+                        return true;
+                }
+                break;
             case R.id.pie_chart:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
                 return true;
