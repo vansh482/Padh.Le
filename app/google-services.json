@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "716694503968",
+    "project_id": "padhleapp",
+    "storage_bucket": "padhleapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716694503968:android:8d00e937c7d4db95f33245",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716694503968-8nptf5qpj1knuie98rmg4v9f79f4e9lc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project",
+            "certificate_hash": "306851ad4cbfb3fab5c5713f6311a5a451a6a02a"
+          }
+        },
+        {
+          "client_id": "716694503968-pck3sdevcp5m77ja4mn7jhbmgogauac6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyJ8_g_6d4zeIZ2OOWLPuFU1mgl-T8-Hs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716694503968-pck3sdevcp5m77ja4mn7jhbmgogauac6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "716694503968-9jmgbl2lr7ajdb6h4uh5uk9nmeuepn3b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.project"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
