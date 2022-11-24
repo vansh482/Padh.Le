@@ -1,5 +1,7 @@
 package com.example.project;
 
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 public class Task {
     String name;
     int id;
@@ -8,6 +10,16 @@ public class Task {
     long Ptime;
     boolean completed;
     String uId;
+    String session;
+
+    public String getSession() {
+        return session;
+    }
+
+    public void setSession(String session) {
+        this.session = session;
+    }
+
 
     public String getuId() {
         return uId;
@@ -27,13 +39,14 @@ public class Task {
         this.time = time;
         this.sTime = sTime;
     }
-    Task(String name, int id, int time,String sTime,boolean completed,String uId){
+    Task(String name, int id, int time,String sTime,boolean completed,String uId,String session){
         this.name=name;
         this.id=id;
         this.time=time;
         this.sTime=sTime;
         this.completed=completed;
         this.uId=uId;
+        this.session=session;
 
     }
     public void setCompleted(boolean completed) {
@@ -97,6 +110,7 @@ public class Task {
         time=0;
         sTime="00:00:00";
     }
+
 
 
 }

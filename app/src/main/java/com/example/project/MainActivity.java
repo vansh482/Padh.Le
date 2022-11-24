@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     static String ID;
+    static String UID;
     static int frag_no;
 
     @Override
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         details.put("Email", user.getEmail());
         details.put("Uid", user.getUid());
         details.put("Category", "coming soon");
+        details.put("session", "");
         db.collection("users").document(user.getUid()).collection("Details").document(user.getUid())
                 .set(details)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
