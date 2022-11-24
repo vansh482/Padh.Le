@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -40,6 +41,7 @@ public class FragmentBegin extends Fragment {
     Button create_button;
     EditText entered_id;
     CardView cardView, cardView1;
+    FloatingActionButton signOut;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     @SuppressLint("MissingInflatedId")
@@ -57,11 +59,11 @@ public class FragmentBegin extends Fragment {
         entered_id = view.findViewById(R.id.entered_id);
         cardView = view.findViewById(R.id.cardView);
         cardView1 = view.findViewById(R.id.cardView1);
-
+        signOut = view.findViewById(R.id.signOut);
 //        animateButton(join_button);
 //        animateButton(create_button);
-        animateView(cardView1, 1000);
-        animateView(cardView, 2000);
+        animateView(cardView1, 600);
+        animateView(cardView, 1000);
         join_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,6 +185,13 @@ public class FragmentBegin extends Fragment {
 //                args.putString("ID", ID);
 //                session.setArguments(args);
 //                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, session).commit();
+            }
+        });
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
         return view;

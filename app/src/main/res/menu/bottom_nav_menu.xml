@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/time_outline"
-        android:title="time"
+        android:title="session"
         app:labelVisibilityMode="unlabeled"
-        android:icon="@drawable/ic_time_outline" />
+        android:icon="@drawable/friends" />
     <item
         android:id="@+id/add_sign"
-        android:title="add"
+        android:title="task"
         app:labelVisibilityMode="unlabeled"
-        android:icon="@drawable/add"
+        android:icon="@drawable/tasks"
         />
     <item
         android:id="@+id/pie_chart"

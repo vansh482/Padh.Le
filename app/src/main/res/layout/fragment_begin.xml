@@ -9,6 +9,20 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/signOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:elevation="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="60dp"
+        app:backgroundTint="@color/white"
+        android:src="@drawable/logout"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView1"
