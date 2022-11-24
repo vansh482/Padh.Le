@@ -57,7 +57,7 @@ public class FragmentFriend extends Fragment {
                             }
 
 //                            show list from here
-                            
+
                         } else {
                             Log.d("mylist2", "Error getting documents: ", task.getException());
                         }
