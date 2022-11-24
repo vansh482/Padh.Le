@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -104,6 +107,15 @@ public class FirstFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        recyclerView.setAlpha(0);
+        recyclerView.setTranslationX(100);
+        recyclerView.animate().alpha(1).translationXBy(-100).setDuration(1000);
+//        AlphaAnimation anim = new AlphaAnimation(0f, 1f);
+//        anim.setDuration(2000);
+//        recyclerView.startAnimation(anim);
+//        recyclerView.setLayoutAnimation((LayoutAnimationController) AnimationUtils.loadLayoutAnimation(recyclerView.getContext(), R.anim.layout_animation_fall_down));
+//        recyclerView.getAdapter().notifyDataSetChanged();
+//        recyclerView.scheduleLayoutAnimation();
         // call sync recycle view here
 
 //        myList.add(new Task("Task 1", 1));

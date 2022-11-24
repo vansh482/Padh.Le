@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,10 +36,10 @@ import java.util.List;
 import java.util.Map;
 
 public class FragmentBegin extends Fragment {
-
     Button join_button;
     Button create_button;
     EditText entered_id;
+    CardView cardView, cardView1;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     @SuppressLint("MissingInflatedId")
@@ -54,8 +55,13 @@ public class FragmentBegin extends Fragment {
         join_button = view.findViewById(R.id.join_button);
         create_button = view.findViewById(R.id.create_button);
         entered_id = view.findViewById(R.id.entered_id);
+        cardView = view.findViewById(R.id.cardView);
+        cardView1 = view.findViewById(R.id.cardView1);
 
-
+//        animateButton(join_button);
+//        animateButton(create_button);
+        animateView(cardView1, 1000);
+        animateView(cardView, 2000);
         join_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,6 +187,19 @@ public class FragmentBegin extends Fragment {
         });
         return view;
     }
+
+    private void animateButton(Button b){
+        b.setAlpha(0f);
+        b.setTranslationY(50);
+        b.animate().alpha(1f).translationYBy(-50).setDuration(1000);
+    }
+
+    private void animateView(View v, int duration){
+        v.setAlpha(0f);
+        v.setTranslationY(50);
+        v.animate().alpha(1f).translationYBy(-50).setDuration(duration);
+    }
+
     private void joinsession(String sessioncode) {
         Map<String, Object> details = new HashMap<>();
         details.put("Name", user.getDisplayName());
