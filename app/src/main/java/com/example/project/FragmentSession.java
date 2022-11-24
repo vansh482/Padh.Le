@@ -62,6 +62,7 @@ public class FragmentSession extends Fragment {
 
                             }
                             //show list here
+
                         } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }

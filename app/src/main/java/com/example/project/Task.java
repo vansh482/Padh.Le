@@ -48,6 +48,14 @@ public class Task {
         this.uId=uId;
         this.session=session;
 
+    }   Task(String name, int id, int time,String sTime,boolean completed,String uId){
+        this.name=name;
+        this.id=id;
+        this.time=time;
+        this.sTime=sTime;
+        this.completed=completed;
+        this.uId=uId;
+
     }
     public void setCompleted(boolean completed) {
         this.completed = completed;
