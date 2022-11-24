@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         details.put("Email", user.getEmail());
         details.put("Uid", user.getUid());
         details.put("Category", "coming soon");
-        details.put("session", "");
+//        details.put("session", "");
         db.collection("users").document(user.getUid()).collection("Details").document(user.getUid())
                 .set(details)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

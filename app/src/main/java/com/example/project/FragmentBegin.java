@@ -65,7 +65,7 @@ public class FragmentBegin extends Fragment {
 
                 if(str.length()==6) {
 
-                    db.collection("sessions").document(str).collection("sessions").whereEqualTo("Name","BHAVYA GUPTA" )
+                    db.collection("sessions").document(str).collection("sessions")
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override

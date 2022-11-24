@@ -54,9 +54,11 @@ public class FragmentFriend extends Fragment {
                                 Task tt=document.toObject(Task.class);
                                 Log.d("mylist2",tt.getName());
                                 myList.add(tt);
+
                             }
 
 //                            show list from here
+
 
                         } else {
                             Log.d("mylist2", "Error getting documents: ", task.getException());
