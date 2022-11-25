@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,7 +59,7 @@ public class FirstFragment extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
-    ImageView enter;
+    FloatingActionButton enter;
 
     RecyclerAdapter.RecyclerViewClickListener listener;
     List<Task> myList;
@@ -103,6 +107,15 @@ public class FirstFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        recyclerView.setAlpha(0);
+        recyclerView.setTranslationX(100);
+        recyclerView.animate().alpha(1).translationXBy(-100).setDuration(1000);
+//        AlphaAnimation anim = new AlphaAnimation(0f, 1f);
+//        anim.setDuration(2000);
+//        recyclerView.startAnimation(anim);
+//        recyclerView.setLayoutAnimation((LayoutAnimationController) AnimationUtils.loadLayoutAnimation(recyclerView.getContext(), R.anim.layout_animation_fall_down));
+//        recyclerView.getAdapter().notifyDataSetChanged();
+//        recyclerView.scheduleLayoutAnimation();
         // call sync recycle view here
 
 //        myList.add(new Task("Task 1", 1));
@@ -319,7 +332,7 @@ public class FirstFragment extends Fragment {
                             String data = jsonObject.getString("time");
                             long time = Integer.parseInt(data) - 98;
                             data = calcSTime(time*60*1000);
-                            predictedTime.setText("Predicted Time: "+ data);
+                            predictedTime.setText(data);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
