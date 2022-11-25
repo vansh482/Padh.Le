@@ -197,7 +197,7 @@ public class FragmentBegin extends Fragment {
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ((MainActivity)getActivity()).handleLogout(view);
             }
         });
         return view;

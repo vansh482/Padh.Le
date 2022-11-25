@@ -18,6 +18,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="60dp"
         app:backgroundTint="@color/white"
+        app:tint="@color/black"
         android:src="@drawable/logout"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,10 +60,10 @@
             android:layout_marginHorizontal="20dp"
             android:background="@null"
             android:ems="10"
-            android:textStyle="italic"
             android:gravity="center"
             android:hint="Enter Session ID "
-            android:inputType="textPersonName" />
+            android:inputType="number"
+            android:textStyle="italic" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
