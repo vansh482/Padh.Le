@@ -162,11 +162,13 @@ public class FragmentBegin extends Fragment {
             @Override
             public void onClick(View v) {
                 String str=getRand();
+
                 while(str.length()!=6) {
                     str=getRand();
                 }
                 ob.ID = str;
                 createSession(str);
+
                 // to firestore done
 //                Map<String, Object> data = new HashMap<>();
 //                data.put("", ob.ID);

@@ -432,7 +432,7 @@ public class FirstFragment extends Fragment {
                 very_big++;
                 break;
         }
-        Predict();
+//        Predict();
     }
     private void firestoreUpdate(int id,String name,String sTime,long time,String uId) {
         //firestore
@@ -473,13 +473,13 @@ public class FirstFragment extends Fragment {
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                             recyclerView.setAdapter(recyclerAdapter);
+                            Predict();
 
                         } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                     }
                 });
-        Predict();
 
     }
 //    public void removeTag(int id){
