@@ -57,8 +57,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         holder.taskTime.setText(myList.get(position).sTime);
         holder.taskType.setText(type.get(myList.get(position).id-1));
         if(myList.get(position).completed == true){
-            holder.itemView.setBackgroundColor(Color.parseColor("#4CAF50"));
-        }
+            holder.itemView.setBackgroundResource(R.drawable.bcomp);
+        } else holder.itemView.setBackgroundResource(R.drawable.b);
 
         int index=myList.get(position).id;
         switch(index){
