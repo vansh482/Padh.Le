@@ -31,9 +31,9 @@ public class FragmentFriend extends Fragment {
     TextView friendName;
 
     RecyclerView recyclerView;
-    RecyclerAdapter recyclerAdapter;
+    RecyclerAdapter3 recyclerAdapter;
 
-    RecyclerAdapter.RecyclerViewClickListener listener;
+    RecyclerAdapter3.RecyclerViewClickListener listener;
 
     Button back3;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
@@ -50,18 +50,21 @@ public class FragmentFriend extends Fragment {
         MainActivity ob = (MainActivity) getActivity();
         ob.frag_no=3;
         friendName = view.findViewById(R.id.friendName);
-        friendName.setText("Tasks of Group member: "+ob.myFriend);
+        friendName.setText(ob.myFriend);
 
         setOnClickListener();
 
         recyclerView = view.findViewById(R.id.friendsTask);
-        recyclerAdapter = new com.example.project.RecyclerAdapter(myList, listener);
+        recyclerAdapter = new com.example.project.RecyclerAdapter3(myList, listener);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+//        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setAlpha(0);
+        recyclerView.setTranslationX(100);
+        recyclerView.animate().alpha(1).translationXBy(-100).setDuration(1000);
 
         //create list task of uid of friends
 
@@ -102,7 +105,7 @@ public class FragmentFriend extends Fragment {
     }
 
     private void setOnClickListener() {
-        listener = new RecyclerAdapter.RecyclerViewClickListener() {
+        listener = new RecyclerAdapter3.RecyclerViewClickListener() {
             @Override
             public void onClick(View v, int position) {
 

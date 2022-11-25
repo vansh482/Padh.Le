@@ -16,7 +16,6 @@
         android:layout_marginHorizontal="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.700" />
@@ -41,18 +40,18 @@
         android:text="Tasks"
         android:textColor="@color/black"
         android:textSize="15dp"
+        android:layout_marginLeft="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        android:layout_marginLeft="7dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.228" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
-        android:layout_width="wrap_content"
-        android:layout_height="94dp"
+        android:layout_width="290dp"
+        android:layout_height="95dp"
         app:cardBackgroundColor="@color/black"
         app:cardCornerRadius="100dp"
         app:cardElevation="10dp"
@@ -85,7 +84,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:layout_marginHorizontal="50dp"
             android:layout_marginTop="10dp"
             android:text="00:00:00"
 

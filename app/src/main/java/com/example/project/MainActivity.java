@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //navigation
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setItemHorizontalTranslationEnabled(true);
+
         bottomNavigationView.setSelectedItemId(R.id.add_sign);
 
     }

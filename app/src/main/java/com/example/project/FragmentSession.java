@@ -58,8 +58,8 @@ public class FragmentSession extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter2);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+//        recyclerView.addItemDecoration(dividerItemDecoration);
         reloadList();
 
 
@@ -120,7 +120,9 @@ public class FragmentSession extends Fragment {
 //                            myList.add(new DetailCard("Nipun", "something@xyz.com", "myID"));
                             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                             recyclerView.setAdapter(recyclerAdapter2);
-
+                            recyclerView.setAlpha(0);
+                            recyclerView.setTranslationX(100);
+                            recyclerView.animate().alpha(1).translationXBy(-100).setDuration(600);
                         } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
