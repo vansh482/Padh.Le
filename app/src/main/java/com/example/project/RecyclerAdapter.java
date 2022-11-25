@@ -2,7 +2,9 @@ package com.example.project;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,11 +50,16 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         return viewHolder;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.taskName.setText(myList.get(position).name);
         holder.taskTime.setText(myList.get(position).sTime);
         holder.taskType.setText(type.get(myList.get(position).id-1));
+        if(myList.get(position).completed == true){
+            holder.itemView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        }
+
         int index=myList.get(position).id;
         switch(index){
             case 1:
