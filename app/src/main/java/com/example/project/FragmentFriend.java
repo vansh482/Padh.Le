@@ -1,16 +1,20 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +28,13 @@ import java.util.List;
 
 public class FragmentFriend extends Fragment {
 
+    TextView friendName;
+
+    RecyclerView recyclerView;
+    RecyclerAdapter recyclerAdapter;
+
+    RecyclerAdapter.RecyclerViewClickListener listener;
+
     Button back3;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -36,8 +47,21 @@ public class FragmentFriend extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friend, container, false);
         myList = new ArrayList<>();
 
-        MainActivity ob = new MainActivity();
+        MainActivity ob = (MainActivity) getActivity();
         ob.frag_no=3;
+        friendName = view.findViewById(R.id.friendName);
+        friendName.setText("Tasks of Group member: "+ob.myFriend);
+
+        setOnClickListener();
+
+        recyclerView = view.findViewById(R.id.friendsTask);
+        recyclerAdapter = new com.example.project.RecyclerAdapter(myList, listener);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(recyclerAdapter);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         //create list task of uid of friends
 
@@ -54,11 +78,11 @@ public class FragmentFriend extends Fragment {
                                 Task tt=document.toObject(Task.class);
                                 Log.d("mylist2",tt.getName());
                                 myList.add(tt);
-
                             }
 
 //                            show list from here
-
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            recyclerView.setAdapter(recyclerAdapter);
 
                         } else {
                             Log.d("mylist2", "Error getting documents: ", task.getException());
@@ -75,5 +99,14 @@ public class FragmentFriend extends Fragment {
             }
         });
         return view;
+    }
+
+    private void setOnClickListener() {
+        listener = new RecyclerAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+
+            }
+        };
     }
 }

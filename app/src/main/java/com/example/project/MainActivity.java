@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     static String ID;
     static String UID;
+    static String myFriend;
     static int frag_no;
 
     @Override
