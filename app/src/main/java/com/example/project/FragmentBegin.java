@@ -241,7 +241,7 @@ public class FragmentBegin extends Fragment {
         details.put("Name", user.getDisplayName());
         details.put("Email", user.getEmail());
         details.put("Uid", user.getUid());
-        db.collection("sessions").document(sessioncode).collection("sessions").document()
+        db.collection("sessions").document(sessioncode).collection("sessions").document(user.getUid())
                 .set(details)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
