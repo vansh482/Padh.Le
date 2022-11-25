@@ -2,6 +2,7 @@ package com.example.project;
 
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -36,6 +38,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -44,6 +47,7 @@ import com.google.firebase.firestore.SetOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +55,7 @@ import java.util.Map;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class FirstFragment extends Fragment {
 
     RecyclerView recyclerView;
@@ -61,6 +66,11 @@ public class FirstFragment extends Fragment {
     List<Task> myList;
     List<Task> archivedTasks = new ArrayList<>();
     TextView predictedTime;
+    LocalDate date = LocalDate.now();
+//    String today=date.toString();
+//    String exactDate=today.substring(date.getDayOfMonth());
+
+
 
     int small=0, big=0, medium=0, very_big=0;
     String url =  "https://padlle-exact-time.herokuapp.com/predict";
@@ -74,8 +84,44 @@ public class FirstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        listUpdate();
 
+//        Log.d("Today", String.valueOf(date.getDayOfWeek()));
+        listUpdate();
+//        Log.d("date",date.toString());
+        Map<String, Object> mydate = new HashMap<>();
+        mydate.put("completedTasks",0);
+        db.collection("users").document(user.getUid()).collection("Completed").document(date.toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("date", "Document exists!");
+                    } else {
+                        Log.d("date", "Document does not exist!");
+
+                        //add to doc
+
+                        db.collection("users").document(user.getUid()).collection("Completed").document(date.toString())
+                                .set(mydate)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("date", "DocumentSnapshot successfully written!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("date", "Error writing document", e);
+                                    }
+                                });
+                    }
+                } else {
+                    Log.d("date", "Failed with: ", task.getException());
+                }
+            }
+        });
         return inflater.inflate(R.layout.fragment_first, container, false);
 
 
@@ -87,8 +133,6 @@ public class FirstFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         listUpdate();
         enter = getActivity().findViewById(R.id.enter);
-
-//        predict = getActivity().findViewById(R.id.predict);
 
         myList = new ArrayList<>();
         predictedTime = getActivity().findViewById(R.id.predictedTime);
@@ -121,7 +165,6 @@ public class FirstFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity2.class);
                 startActivityForResult(intent, 1);
-//                Log.d("fuck","you");
 //                listUpdate();
             }
         });
@@ -161,6 +204,7 @@ public class FirstFragment extends Fragment {
                 case ItemTouchHelper.LEFT:
 
                     // delete task from firestore
+
                     db.collection("users").document(user.getUid()).collection("Tasks").document(uId)
                             .delete();
                     listUpdate();
@@ -192,9 +236,17 @@ public class FirstFragment extends Fragment {
 //                    int id2=myList.get(position).id;
 //                    myList.remove(position);
 //                    recyclerAdapter.notifyItemRemoved(position);
-
                     db.collection("users").document(user.getUid()).collection("Tasks").document(uId)
                             .update("completed", true);
+                    db.collection("users").document(user.getUid()).collection("Completed").document(date.toString())
+                            .update("completedTasks", FieldValue.increment(1));
+                    Log.d("complete","1");
+
+                    //update completed field
+
+
+
+
 //                    db.collection("users").document(user.getUid()).collection("Completed").document(uId)
 //                            .update(today, );
 
@@ -207,6 +259,9 @@ public class FirstFragment extends Fragment {
                                 public void onClick(View v) {
                                     db.collection("users").document(user.getUid()).collection("Tasks").document(uId)
                                             .update("completed", false);
+                                    //update completed field
+                                    db.collection("users").document(user.getUid()).collection("Completed").document(date.toString())
+                                            .update("completedTasks", FieldValue.increment(-1));
                                     listUpdate();
                                 }
                             }).show();

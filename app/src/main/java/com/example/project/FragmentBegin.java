@@ -153,8 +153,12 @@ public class FragmentBegin extends Fragment {
         create_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int random = (int)((Math.random())*1000000);
-                ob.ID = String.valueOf(random);
+                String str=getRand();
+                while(str.length()!=6) {
+                    str=getRand();
+                }
+                ob.ID = str;
+                createSession(str);
                 // to firestore done
 //                Map<String, Object> data = new HashMap<>();
 //                data.put("", ob.ID);
@@ -166,7 +170,7 @@ public class FragmentBegin extends Fragment {
 //                db.collection("users").document(user.getUid()).collection("Details").document(user.getUid()).update({"session", ob.ID});
 //                db.collection("sessions").document(ob.ID).set(data, SetOptions.merge());
 
-              joinsession(ob.ID);
+
 
 
                 Fragment session = new FragmentSession();
@@ -180,6 +184,26 @@ public class FragmentBegin extends Fragment {
             }
         });
         return view;
+    }
+    private void createSession(String str)
+    {
+        db.collection("sessions").document(str).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("date", "Document exists!");
+                        Toast.makeText(getActivity(), "Please create again ", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d("date", "Document does not exist!");
+                        joinsession(str);
+                    }
+                } else {
+                    Log.d("date", "Failed with: ", task.getException());
+                }
+            }
+        });
     }
     private void joinsession(String sessioncode) {
         Map<String, Object> details = new HashMap<>();
@@ -200,5 +224,9 @@ public class FragmentBegin extends Fragment {
                         Log.w("Firestore", "Error writing document", e);
                     }
                 });
+    }
+    private String getRand(){
+        int random = (int)((Math.random())*1000000);
+        return String.valueOf(random);
     }
 }
