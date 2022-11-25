@@ -1,6 +1,7 @@
 package com.example.project;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +72,7 @@ public class FragmentFriend extends Fragment {
         db.collection("users").document(ob.UID).collection("Tasks")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -77,7 +81,9 @@ public class FragmentFriend extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Task tt=document.toObject(Task.class);
                                 Log.d("mylist2",tt.getName());
-                                myList.add(tt);
+                                //check if today's date is same as task's added date
+//                                if(tt.getDate() == LocalDate.now().toString())
+                                    myList.add(tt);
                             }
 
 //                            show list from here
