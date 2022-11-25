@@ -59,6 +59,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         if(myList.get(position).completed == true){
             holder.itemView.setBackgroundColor(Color.parseColor("#4CAF50"));
         }
+        else
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         int index=myList.get(position).id;
         switch(index){

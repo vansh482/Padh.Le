@@ -161,8 +161,10 @@ public class FragmentBegin extends Fragment {
         create_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int random = (int)((Math.random())*1000000);
-                ob.ID = String.valueOf(random);
+                String str=getRand();
+                if(str.length()!=6)
+                    str=getRand();
+                ob.ID = str;
                 // to firestore done
 //                Map<String, Object> data = new HashMap<>();
 //                data.put("", ob.ID);
@@ -228,5 +230,9 @@ public class FragmentBegin extends Fragment {
                         Log.w("Firestore", "Error writing document", e);
                     }
                 });
+    }
+    private String getRand(){
+        int random = (int)((Math.random())*1000000);
+        return String.valueOf(random);
     }
 }
