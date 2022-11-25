@@ -52,7 +52,6 @@ public class FragmentSession extends Fragment {
         myList = new ArrayList<>();
 
         setOnClickListener();
-
         recyclerView = view.findViewById(R.id.listv);
         recyclerAdapter2 = new com.example.project.RecyclerAdapter2(myList, listener);
 
@@ -61,32 +60,8 @@ public class FragmentSession extends Fragment {
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
+        reloadList();
 
-        db.collection("sessions").document(ob.ID).collection("sessions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            myList.clear();
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                DetailCard person = document.toObject(DetailCard.class);
-                                myList.add(person);
-//                                if(person.getName()!=null)
-//                                {
-                                Log.d("myList", person.getName().toString());
-//                                }
-                            }
-//                            myList.add(new DetailCard("Nipun", "something@xyz.com", "myID"));
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                            recyclerView.setAdapter(recyclerAdapter2);
-
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
 
         ob.frag_no = 2;
 
