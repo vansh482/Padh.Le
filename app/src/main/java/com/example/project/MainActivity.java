@@ -1,6 +1,7 @@
 package com.example.project;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     static String UID;
     static String myFriend;
     static int frag_no;
+    String category;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -62,20 +64,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
+                    if (!document.exists()) {
                         Log.d("date", "Document exists!");
                         Intent i=new Intent(MainActivity.this,Form.class);
                         startActivityForResult(i,30);
-
-
-
 
                         Log.d("TAG", "onCreate: ");
                         Map<String, Object> details = new HashMap<>();
                         details.put("Name", user.getDisplayName());
                         details.put("Email", user.getEmail());
                         details.put("Uid", user.getUid());
-                        details.put("Category",i.getStringExtra("category"));
+                        details.put("Category",category);
                         db.collection("users").document(user.getUid()).collection("Details").document(user.getUid())
                                 .set(details)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -164,5 +163,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 }
             }
         });
+    }
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==30 && resultCode==RESULT_OK){
+            Log.d("CatTAG", "onActivityResult: "+category);
+            category=data.getStringExtra("category");
+        }
     }
 }
