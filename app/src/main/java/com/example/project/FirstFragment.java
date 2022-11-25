@@ -442,6 +442,7 @@ public class FirstFragment extends Fragment {
         taskDetail.put("time",time);
         taskDetail.put("completed",false);
         taskDetail.put("sTime",sTime);
+        taskDetail.put("date", LocalDate.now().toString());
         if(uId!="NULL") {
             taskDetail.put("uId",uId);
             db.collection("users").document(user.getUid()).collection("Tasks").document(uId).set(taskDetail, SetOptions.merge());

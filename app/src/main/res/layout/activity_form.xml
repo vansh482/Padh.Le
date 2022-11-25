@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/form"
+    tools:context=".MainActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="25dp"
+        android:background="@drawable/round_corner"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingStart="10dp"
+                android:paddingBottom="0dp"
+                android:text="Gender:" />
+
+            <RadioGroup
+                android:id="@+id/q1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/q1_1"
+                    android:layout_width="88dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:buttonTint="#7A7777"
+                    android:checked="true"
+                    android:contentDescription="0"
+                    android:text="Female" />
+
+                <RadioButton
+                    android:id="@+id/q1_2"
+                    android:layout_width="79dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:buttonTint="#7A7777"
+                    android:contentDescription="1"
+                    android:text="Male" />
+
+                <RadioButton
+                    android:id="@+id/q1_3"
+                    android:layout_width="82dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:buttonTint="#7A7777"
+                    android:checked="false"
+                    android:contentDescription="2"
+                    android:text="Other" />
+
+            </RadioGroup>
+
+            <View
+                style="@style/viewLine"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+
+
+            <EditText
+                android:id="@+id/age"
+                android:layout_width="269dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/round_edittext"
+                android:hint="Age"
+                android:includeFontPadding="true"
+                android:inputType="number"
+                android:paddingStart="15dp" />
+
+            <TextView
+                android:id="@+id/age_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/age"
+                android:textColor="#F40707"
+                android:visibility="invisible" />
+
+            <View
+                style="@style/viewLine"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                style="@style/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingStart="10dp"
+                android:text="Are you part of any extra curricular activities/sports at your school/college ?" />
+
+            <RadioGroup
+                android:id="@+id/q2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/q2_1"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="25dp"
+                    android:buttonTint="#7A7777"
+                    android:contentDescription="1"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/q2_2"
+                    android:layout_width="129dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:buttonTint="#7A7777"
+                    android:checked="true"
+                    android:contentDescription="0"
+                    android:text="No" />
+
+            </RadioGroup>
+
+            <View
+                style="@style/viewLine"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                style="@style/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingLeft="10dp"
+                android:text="Are you satisfied with the amount of free time you get in school/college ?" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="very\nlow" />
+
+                <RadioGroup
+                    android:id="@+id/q3"
+                    android:layout_width="172dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="0dp"
+                    android:orientation="horizontal"
+                    android:textAlignment="center">
+
+                    <RadioButton
+                        android:id="@+id/q3_1"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="1" />
+
+                    <RadioButton
+                        android:id="@+id/q3_2"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="2" />
+
+                    <RadioButton
+                        android:id="@+id/q3_3"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:checked="true"
+                        android:contentDescription="3" />
+
+                    <RadioButton
+                        android:id="@+id/q3_4"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="4" />
+
+                    <RadioButton
+                        android:id="@+id/q3_5"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="5" />
+
+                </RadioGroup>
+
+                <TextView
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="very\nhigh" />
+            </LinearLayout>
+
+            <View
+                style="@style/viewLine"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                style="@style/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingStart="10dp"
+                android:text="How often do you go out with your friends ?" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:text="rarely" />
+
+                <RadioGroup
+                    android:id="@+id/q4"
+                    android:layout_width="172dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="0dp"
+                    android:orientation="horizontal"
+                    android:textAlignment="center">
+
+                    <RadioButton
+                        android:id="@+id/q4_1"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="1" />
+
+                    <RadioButton
+                        android:id="@+id/q4_2"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="2" />
+
+                    <RadioButton
+                        android:id="@+id/q4_3"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:checked="true"
+                        android:contentDescription="3" />
+
+                    <RadioButton
+                        android:id="@+id/q4_4"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="4" />
+
+                    <RadioButton
+                        android:id="@+id/q4_5"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="5" />
+
+                </RadioGroup>
+
+                <TextView
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="often" />
+            </LinearLayout>
+
+            <View
+                style="@style/viewLine"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                style="@style/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingStart="10dp"
+                android:text="What is your current health status ?" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:text="unwell" />
+
+                <RadioGroup
+                    android:id="@+id/q5"
+                    android:layout_width="172dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="0dp"
+                    android:orientation="horizontal"
+                    android:textAlignment="center">
+
+                    <RadioButton
+                        android:id="@+id/q5_1"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="1" />
+
+                    <RadioButton
+                        android:id="@+id/q5_2"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="2" />
+
+                    <RadioButton
+                        android:id="@+id/q5_3"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:checked="true"
+                        android:contentDescription="3" />
+
+                    <RadioButton
+                        android:id="@+id/q5_4"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="4" />
+
+                    <RadioButton
+                        android:id="@+id/q5_5"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#7A7777"
+                        android:contentDescription="5" />
+
+                </RadioGroup>
+
+                <TextView
+                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="healthy" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/cont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="#D2BEC3BA"
+                android:onClick="onClick"
+                android:text="Continue"
+                android:textColor="#0F3A25" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

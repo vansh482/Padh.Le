@@ -11,6 +11,15 @@ public class Task {
     boolean completed;
     String uId;
     String session;
+    String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getSession() {
         return session;
@@ -39,22 +48,23 @@ public class Task {
         this.time = time;
         this.sTime = sTime;
     }
-    Task(String name, int id, int time,String sTime,boolean completed,String uId,String session){
+   Task(String name, int id, int time,String sTime,boolean completed,String uId){
         this.name=name;
         this.id=id;
         this.time=time;
         this.sTime=sTime;
         this.completed=completed;
         this.uId=uId;
-        this.session=session;
 
-    }   Task(String name, int id, int time,String sTime,boolean completed,String uId){
+    }
+    Task(String name, int id, int time,String sTime,boolean completed,String uId,String date){
         this.name=name;
         this.id=id;
         this.time=time;
         this.sTime=sTime;
         this.completed=completed;
         this.uId=uId;
+        this.date=date;
 
     }
     public void setCompleted(boolean completed) {
