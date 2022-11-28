@@ -380,6 +380,7 @@ public class FirstFragment extends Fragment {
     }
     public void Predict() {
 //        tagUpdate();
+
         db.collection("users").document(user.getUid()).collection("Details")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -451,7 +452,7 @@ public class FirstFragment extends Fragment {
                                         new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
-                                                Toast.makeText(getActivity(), "Connection error", Toast.LENGTH_LONG);
+                                                Toast.makeText(getActivity(), "Connection error", Toast.LENGTH_LONG).show();
                                             }
 
                                         }){

@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +32,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.os.Handler;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -41,39 +45,54 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     static String myFriend;
     static int frag_no;
     String category;
-
+    private static int Splash_timeout=5000;
+    TextView tv;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         frag_no = 1;
+//        tv=findViewById(R.id.textView);
+//        Handler handler = new Handler();
+//        Animation myanimation= AnimationUtils.loadAnimation(MainActivity.this,R.anim.textaniimation);
+//        tv.startAnimation(myanimation);
+//
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                Log.d("animate","1");
+//
+//            }
+//        }, Splash_timeout);   //5 seconds
+//
 
         //firebase auth
+        Log.d("animate","1");
+
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            Intent i = new Intent(this, LoginRegisterActivity.class);
+            Intent i = new Intent(MainActivity.this,LoginRegisterActivity.class);
             startActivity(i);
-            this.finish();
+            finish();
         }
         //firestore
         ///////////////////////////  Form /////////////////////////
-        db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d("date28", "Document exists!");
-                        Intent i=new Intent(MainActivity.this,Form.class);
-                        startActivityForResult(i,30);
-                    } else {
-                        Log.d("date28", "Document does not exist!");
-                    }
-                } else {
-                    Log.d("date", "Failed with: ", task.getException());
-                }
-            }
-        });
+//        db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+//                        Log.d("date28", "Document exists!");
+//                        Intent i=new Intent(MainActivity.this,Form.class);
+//                        startActivityForResult(i,30);
+//                    } else {
+//                        Log.d("date28", "Document does not exist!");
+//                    }
+//                } else {
+//                    Log.d("date", "Failed with: ", task.getException());
+//                }
+//            }
+//        });
         ///////////////////////////////////////////////
 
 
