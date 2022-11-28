@@ -128,7 +128,6 @@ public class FirstFragment extends Fragment {
         });
         return inflater.inflate(R.layout.fragment_first, container, false);
 
-
     }
 
     @Override
@@ -190,6 +189,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent (getActivity(), MainActivity3.class);
+                intent.putExtra("title", myList.get(position).name);
                 intent.putExtra("time", myList.get(position).time);
                 intent.putExtra("pos", position);
                 intent.putExtra("uId", myList.get(position).uId);

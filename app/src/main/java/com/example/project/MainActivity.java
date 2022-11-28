@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     DocumentSnapshot document = task.getResult();
                     if (!document.exists()) {
                         Log.d("date", "Document exists!");
-                        Intent i=new Intent(MainActivity.this,Form.class);
-                        startActivityForResult(i,30);
+                        Intent i=new Intent(getBaseContext(),Form.class);
+                        startActivityForResult(i,3);
 
                         Log.d("TAG", "onCreate: ");
                         Map<String, Object> details = new HashMap<>();
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==30 && resultCode==RESULT_OK){
+        if(requestCode==3 && resultCode==RESULT_OK){
             Log.d("CatTAG", "onActivityResult: "+category);
             category=data.getStringExtra("category");
         }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -100,6 +101,7 @@ public class Form extends AppCompatActivity {
                             Toast.makeText(Form.this, data, Toast.LENGTH_SHORT).show();
                             Intent i=new Intent();
                             i.putExtra("category",result);
+                            Log.d("tTAG", "onActivityResult: "+result);
                             setResult(RESULT_OK, i);
                             finish();
                         } catch (JSONException e) {
