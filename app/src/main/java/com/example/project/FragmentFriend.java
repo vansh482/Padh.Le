@@ -85,7 +85,9 @@ public class FragmentFriend extends Fragment {
                                 Task tt=document.toObject(Task.class);
                                 Log.d("mylist2",tt.getName());
                                 //check if today's date is same as task's added date
-//                                if(tt.getDate() == LocalDate.now().toString())
+//                                Log.d("mydate","databse "+tt.getDate());
+//                                Log.d("mydate","today "+ LocalDate.now().toString());
+                                if(tt.getDate().equals(LocalDate.now().toString()))
                                     myList.add(tt);
                             }
 

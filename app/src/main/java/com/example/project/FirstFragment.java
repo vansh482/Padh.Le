@@ -531,6 +531,7 @@ public class FirstFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Task tt=document.toObject(Task.class);
                                 Log.d("firebase",tt.getName());
+
                                 myList.add(tt);
                                 addTag(tt.getId());
 

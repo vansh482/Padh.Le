@@ -28,13 +28,13 @@ public class MainActivity3 extends AppCompatActivity {
     String sTime;
     long k,j=0;
     boolean flag=true;
-    @Override
+    boolean start_flag=false, five_flag=false, pause_flag=false;
 
+    Intent intent=new Intent();
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        Log.d("ma3","oncreate "+ String.valueOf(min));
-
         // progressBar = findViewById(R.id.progress_bar);
         chronometer = findViewById(R.id.chronometer);
         btStart = findViewById(R.id.bt_start);
@@ -45,10 +45,9 @@ public class MainActivity3 extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             prev = extra.getLong("time");
-            Log.d("ma3","prev"+String.valueOf(prev));
             pos = extra.getInt("pos");
             uId=extra.getString("uId");
-            // Log.d("ma3", "onCreate: " + prev + pos);
+            Log.d("ma3", "onCreate: " + prev );
         }
 
         if(prev>0){
@@ -70,8 +69,7 @@ public class MainActivity3 extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("ma3","on+5 "+ String.valueOf(min));
-
+                five_flag=true;
                 j++;
                 min=min+5;
                 hrs = hrs+min / 60;
@@ -87,8 +85,7 @@ public class MainActivity3 extends AppCompatActivity {
             boolean temp = true;
             @Override
             public void onClick(View v) {
-                Log.d("ma3","btstart "+ String.valueOf(min));
-
+                start_flag=true;
                 //-----------------------------------------------------------------------
                 if (!isResume) {
 
@@ -110,37 +107,11 @@ public class MainActivity3 extends AppCompatActivity {
 //---------------------------------------------------------------------------------------------------------
 
 
-        Intent i=new Intent();
 
         btStop.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                Log.d("ma3","btstop "+ String.valueOf(min));
-
-                if(!isResume){
-
-
-                    k= (tUpdate*1000)+(j*300000);
-                    //                    time=String.valueOf(k );
-                    i.putExtra("position", pos);
-                    i.putExtra("uId", uId);
-                    i.putExtra("time", k);
-                    i.putExtra("sTime",sTime);
-                    btStart.setImageDrawable(getResources().getDrawable(R.drawable.ic_play));
-
-                    tUpdate=0L;
-                    sec=0;
-                    min=0;
-                    hrs=0;
-                    chronometer.setText("00:00:00");
-                    k=0;
-                    j=0;
-                    handler.removeCallbacks(runnable);
-
-                    setResult(RESULT_OK, i);
-                    finish();
-                }
+                my_func();
             }
         });
     }
@@ -148,8 +119,6 @@ public class MainActivity3 extends AppCompatActivity {
     public Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Log.d("ma3","run "+ String.valueOf(min));
-
             long temp ,temp2;
             if(isRunning==true) tUpdate++;
 
@@ -167,9 +136,67 @@ public class MainActivity3 extends AppCompatActivity {
             sec = tUpdate % 60;
 
 
+
             sTime = String.format("%02d", (hrs+temp2)%60) + ":" + String.format("%02d", (min+temp)%60) + ":" + String.format("%02d", sec);
             chronometer.setText(sTime);
             handler.postDelayed(this, 1000);
         }
     };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("TAG", "onStop: ");
+        pause_flag=true;
+        my_func();
+    }
+
+    public void my_func(){
+        if(!isResume){
+            if(pause_flag){
+                k = (tUpdate * 1000) + (j * 300000) + prev - prev % 60000;
+//                    time=String.valueOf(k );
+                intent.putExtra("position", pos);
+                intent.putExtra("uId", uId);
+                intent.putExtra("time", k);
+                intent.putExtra("sTime", sTime);
+            }
+            else if(start_flag) {
+                k = (tUpdate * 1000) + (j * 300000) + prev - prev % 60000;
+//                    time=String.valueOf(k );
+                intent.putExtra("position", pos);
+                intent.putExtra("uId", uId);
+                intent.putExtra("time", k);
+                intent.putExtra("sTime", sTime);
+            }
+            else if(five_flag){
+                k = (tUpdate * 1000) + (j * 300000) + prev;
+//                    time=String.valueOf(k );
+                intent.putExtra("position", pos);
+                intent.putExtra("uId", uId);
+                intent.putExtra("time", k);
+                intent.putExtra("sTime", sTime);
+            }
+            else{
+                intent.putExtra("position", pos);
+                intent.putExtra("uId", uId);
+                intent.putExtra("time", prev);
+                intent.putExtra("sTime", sTime);
+            }
+            btStart.setImageDrawable(getResources().getDrawable(R.drawable.ic_play));
+
+            tUpdate=0L;
+            start_flag=false;
+            sec=0;
+            min=0;
+            hrs=0;
+            chronometer.setText("00:00:00");
+            k=0;
+            j=0;
+            handler.removeCallbacks(runnable);
+
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+    }
 }
