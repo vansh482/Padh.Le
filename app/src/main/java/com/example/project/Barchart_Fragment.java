@@ -1,9 +1,11 @@
 package com.example.project;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -33,6 +35,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,20 +58,26 @@ public class Barchart_Fragment extends Fragment {
                 .whereEqualTo("completed", true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             int easy=0,medium=0,big=0,v_big=0;
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Task tt = document.toObject(Task.class);
-                                if (tt.getId() == 1)
-                                    easy++;
-                                if (tt.getId() == 2)
-                                    medium++;
-                                if (tt.getId() == 3)
-                                    big++;
-                                if (tt.getId() == 4)
-                                    v_big++;
+                                if(tt.getDate().equals(LocalDate.now().toString()))
+                                {
+
+                                    if (tt.getId() == 1)
+                                        easy++;
+                                    if (tt.getId() == 2)
+                                        medium++;
+                                    if (tt.getId() == 3)
+                                        big++;
+                                    if (tt.getId() == 4)
+                                        v_big++;
+
+                                }
                             }
                             Log.d("big", String.valueOf(big));
                             bh.setEasy(easy);
@@ -94,10 +103,10 @@ public class Barchart_Fragment extends Fragment {
         barChart = view.findViewById(R.id.barChart);
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         ArrayList<String> xlabels = new ArrayList<>();
-        xlabels.add("Easy");
+        xlabels.add("Small");
         xlabels.add("Medium");
         xlabels.add("Big");
-        xlabels.add("V Big");
+        xlabels.add("Very Big");
 
 
 //        for(int i = 0; i < xlabels.size(); i++){

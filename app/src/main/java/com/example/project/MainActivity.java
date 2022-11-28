@@ -47,62 +47,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        frag_no=1;
+        frag_no = 1;
 
         //firebase auth
-        if(FirebaseAuth.getInstance().getCurrentUser() == null){
-            Intent i = new Intent(this,LoginRegisterActivity.class);
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Intent i = new Intent(this, LoginRegisterActivity.class);
             startActivity(i);
             this.finish();
         }
         //firestore
-        //if not present in backend firestore then
-
-        ///////////////////////////////////////////////////////////
+        ///////////////////////////  Form /////////////////////////
         db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (!document.exists()) {
-                        Log.d("date", "Document exists!");
+                    if (document.exists()) {
+                        Log.d("date28", "Document exists!");
                         Intent i=new Intent(MainActivity.this,Form.class);
                         startActivityForResult(i,30);
-
-                        Log.d("TAG", "onCreate: ");
-                        Map<String, Object> details = new HashMap<>();
-                        details.put("Name", user.getDisplayName());
-                        details.put("Email", user.getEmail());
-                        details.put("Uid", user.getUid());
-                        details.put("Category",category);
-                        db.collection("users").document(user.getUid()).collection("Details").document(user.getUid())
-                                .set(details)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("Firestore", "DocumentSnapshot successfully written!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w("Firestore", "Error writing document", e);
-                                    }
-                                });
                     } else {
-                        Log.d("date", "Document does not exist!");
+                        Log.d("date28", "Document does not exist!");
                     }
                 } else {
                     Log.d("date", "Failed with: ", task.getException());
                 }
             }
         });
-
-
-    ///////////////////////////////////////////////
-
-
-
+        ///////////////////////////////////////////////
 
 
         //navigation
@@ -123,14 +95,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     FragmentFriend fragmentFriend = new FragmentFriend();
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item){
-        switch(item.getItemId()){
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.add_sign:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, firstFragment).commit();
                 return true;
 
             case R.id.time_outline:
-                switch (frag_no){
+                switch (frag_no) {
                     case 1:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentBegin).commit();
                         return true;
@@ -148,27 +120,51 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         return false;
     }
-    void startLogin(){
+
+    void startLogin() {
         Intent i = new Intent(this, LoginRegisterActivity.class);
         startActivity(i);
         this.finish();
     }
+
     public void handleLogout(View view) {
         AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     startLogin();
 
                 }
             }
         });
     }
+
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==30 && resultCode==RESULT_OK){
-            Log.d("CatTAG", "onActivityResult: "+category);
-            category=data.getStringExtra("category");
+        if (requestCode == 30 && resultCode == RESULT_OK) {
+            Log.d("CatTAG", "onActivityResult: " + category);
+            category = data.getStringExtra("category");
+
+            Log.d("TAG", "onCreate: ");
+            Map<String, Object> details = new HashMap<>();
+            details.put("Name", user.getDisplayName());
+            details.put("Email", user.getEmail());
+            details.put("Uid", user.getUid());
+            details.put("Category", category);
+            db.collection("users").document(user.getUid()).collection("Details").document(user.getUid())
+                    .set(details)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("Firestore", "DocumentSnapshot successfully written!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("Firestore", "Error writing document", e);
+                        }
+                    });
         }
     }
 }

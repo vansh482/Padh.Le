@@ -77,7 +77,7 @@ public class FirstFragment extends Fragment {
 
 
     int small=0, big=0, medium=0, very_big=0;
-    String url =  "https://padlle-exact-time.herokuapp.com/predict";
+    String url =  "https://cat1.pythonanywhere.com/predict";
 
     FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -190,6 +190,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent (getActivity(), MainActivity3.class);
+                Log.d("ma1", String.valueOf(myList.get(position).time));
                 intent.putExtra("time", myList.get(position).time);
                 intent.putExtra("pos", position);
                 intent.putExtra("uId", myList.get(position).uId);
@@ -331,6 +332,7 @@ public class FirstFragment extends Fragment {
             //update time here
             String uId=data.getStringExtra("uId");
             long time=data.getLongExtra("time",0);
+            Log.d("ma2", String.valueOf(time));
             String sTime=data.getStringExtra("sTime");
             db.collection("users").document(user.getUid()).collection("Tasks").document(uId)
                     .update(
@@ -378,44 +380,104 @@ public class FirstFragment extends Fragment {
     }
     public void Predict() {
 //        tagUpdate();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        db.collection("users").document(user.getUid()).collection("Details")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String data = jsonObject.getString("time");
-                            long time = Integer.parseInt(data) - 98;
-                            data = calcSTime(time*60*1000);
-                            predictedTime.setText(data);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                DetailCard dd=document.toObject(DetailCard.class);
+                                Log.d("firebasecate",dd.getCategory());
+                                String cat=dd.getCategory();
+                                long b = 0;
+                                switch(cat){
+                                    case "1":
+                                        url= "https://cat1.pythonanywhere.com/predict";
+                                        b=-5;
+                                        break;
+                                    case "2":
+                                        url= "https://Category2.pythonanywhere.com/predict";
+                                        b=-1;
+                                        break;
+                                    case "3":
+                                        url= "https://cat3.pythonanywhere.com/predict";
+                                        b=37;
+                                        break;
+                                    case "4":
+                                        url= "https://cat4.pythonanywhere.com/predict";
+                                        b=38;
+                                        break;
+                                    default:
+                                        b=38;
+                                        url= "https://cat4.pythonanywhere.com/predict";
+
+                                }
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                try {
+                                                    JSONObject jsonObject = new JSONObject(response);
+                                                    String data = String.valueOf(jsonObject.getInt("time"));
+
+                                                    long b = 0;
+                                                    switch(cat){
+                                                        case "1":
+                                                            b=-5;
+                                                            break;
+                                                        case "2":
+                                                            b=-1;
+                                                            break;
+                                                        case "3":
+                                                            b=37;
+                                                            break;
+                                                        case "4":
+                                                            b=38;
+                                                            break;
+                                                        default:
+                                                            b=38;
+
+                                                    }
+                                                    long time = Integer.parseInt(data)-b;
+                                                    data = calcSTime(time*60*1000);
+                                                    predictedTime.setText(data);
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Toast.makeText(getActivity(), "Connection error", Toast.LENGTH_LONG);
+                                            }
+
+                                        }){
+
+                                    @Override
+                                    protected Map<String, String> getParams(){
+                                        // update tag details
+
+                                        Map<String,String> params = new HashMap<String,String>();
+                                        params.put("small", String.valueOf(small));
+                                        params.put("medium", String.valueOf(medium));
+                                        params.put("big", String.valueOf(big));
+                                        params.put("very_big", String.valueOf(very_big));
+                                        return params;
+                                    }
+                                };
+
+                                RequestQueue queue = Volley.newRequestQueue(getActivity());
+                                queue.add(stringRequest);
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), "Connection error", Toast.LENGTH_LONG);
-                    }
+                });
 
-                }){
-
-            @Override
-            protected Map<String, String> getParams(){
-                // update tag details
-
-                Map<String,String> params = new HashMap<String,String>();
-                params.put("small", String.valueOf(small));
-                params.put("medium", String.valueOf(medium));
-                params.put("big", String.valueOf(big));
-                params.put("very_big", String.valueOf(very_big));
-                return params;
-            }
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        queue.add(stringRequest);
     }
     public void addTag(int id){
         switch(id){
@@ -469,8 +531,10 @@ public class FirstFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Task tt=document.toObject(Task.class);
                                 Log.d("firebase",tt.getName());
+
                                 myList.add(tt);
                                 addTag(tt.getId());
+
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                             recyclerView.setAdapter(recyclerAdapter);
