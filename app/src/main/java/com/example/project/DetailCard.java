@@ -6,6 +6,15 @@ public class DetailCard {
     String Name;
     String Email;
     String Uid;
+    String Category;
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
 
     public String getName() {
         return Name;
@@ -36,5 +45,11 @@ public class DetailCard {
         this.Name = name;
         this.Email = email;
         this.Uid=uid;
+    }
+    DetailCard(String name, String email,String uid,String category) {
+        this.Name = name;
+        this.Email = email;
+        this.Uid=uid;
+        this.Category=category;
     }
 }

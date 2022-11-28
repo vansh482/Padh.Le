@@ -34,7 +34,8 @@ public class Form extends AppCompatActivity {
     RadioGroup gender, activities, freetime, goout, health;
     Button Continue;
     String Gender, Age, Activities, FreeTime, GoOut, Health;
-    String url = "https://studytime-padhle.herokuapp.com/predict";
+//    String url = "https://studytime-padhle.herokuapp.com/predict";
+    String url = "https://sahilsorte16.pythonanywhere.com/predict";
     String result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class Form extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            result = jsonObject.getString("studytime");
+                            result = jsonObject.getString("category");
                             String data;
                             switch (result) {
                                 case "1":

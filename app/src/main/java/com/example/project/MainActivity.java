@@ -56,18 +56,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             this.finish();
         }
         //firestore
-        ///////////////////////////////////////////////////////////
+        ///////////////////////////  Form /////////////////////////
         db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (!document.exists()) {
-                        Log.d("date", "Document exists!");
+                    if (document.exists()) {
+                        Log.d("date28", "Document exists!");
                         Intent i=new Intent(MainActivity.this,Form.class);
                         startActivityForResult(i,30);
                     } else {
-                        Log.d("date", "Document does not exist!");
+                        Log.d("date28", "Document does not exist!");
                     }
                 } else {
                     Log.d("date", "Failed with: ", task.getException());

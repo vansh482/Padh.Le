@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 public class MainActivity3 extends AppCompatActivity {
     private Chronometer chronometer;
     ImageButton btStart, btStop;
-    private boolean isResume;
+    private boolean isResume,isRunning,flg=false;
     Handler handler,handler2;
     long tMilliSec, tStart, tBuff, tUpdate = 0L;
     long sec=0, hrs=0, min=0, prev=0;
@@ -29,10 +29,13 @@ public class MainActivity3 extends AppCompatActivity {
     long k,j=0;
     boolean flag=true;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        progressBar = findViewById(R.id.progress_bar);
+        Log.d("ma3","oncreate "+ String.valueOf(min));
+
+        // progressBar = findViewById(R.id.progress_bar);
         chronometer = findViewById(R.id.chronometer);
         btStart = findViewById(R.id.bt_start);
         btStop = findViewById(R.id.bt_stop);
@@ -42,15 +45,19 @@ public class MainActivity3 extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             prev = extra.getLong("time");
+            Log.d("ma3","prev"+String.valueOf(prev));
             pos = extra.getInt("pos");
             uId=extra.getString("uId");
-            Log.d("ma3", "onCreate: " + prev + pos);
+            // Log.d("ma3", "onCreate: " + prev + pos);
         }
 
         if(prev>0){
+            flg=true;
             sec =  (prev / 1000);
-            min = min+(sec / 60);
-            hrs = hrs+(min / 60);
+            hrs = hrs+(sec / 3600);
+            min = (min+(sec / 60))%60;
+
+
             sec = sec % 60;
 //            tUpdate+=sec;
 
@@ -63,6 +70,7 @@ public class MainActivity3 extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("ma3","on+5 "+ String.valueOf(min));
 
                 j++;
                 min=min+5;
@@ -74,48 +82,26 @@ public class MainActivity3 extends AppCompatActivity {
             }
         });
 
-        Log.d("ma4", "onCreate: " + k + sTime + pos);
-
 //-------------------------------------------------------------------------------------------------
         btStart.setOnClickListener(new View.OnClickListener() {
-            boolean fuck = true;
+            boolean temp = true;
             @Override
             public void onClick(View v) {
-                //--------------------------------------------------------------------
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // set the limitations for the numeric
-                        // text under the progress bar
-                        if(fuck){
-                            if (i <= 100) {
-                                progressBar.setProgress(i);
-                                i++;
-                                handler.postDelayed(this, 200);
-                                Log.d("ma4", "onCreate: " + k + sTime + pos);
-                            } else {
-                                i=0;
-                                progressBar.setProgress(i);
-                                i++;
-                                handler.postDelayed(this, 200);
-                            }
-                        }}
-                }, 200);
+                Log.d("ma3","btstart "+ String.valueOf(min));
+
                 //-----------------------------------------------------------------------
                 if (!isResume) {
-                    tStart = SystemClock.uptimeMillis()-prev;
-                    handler.postDelayed(runnable, 0);
-                    chronometer.start();
+
                     isResume = true;
-                    fuck = true;
+                    isRunning=true;
+                    handler.postDelayed(runnable, 0);
                     btStop.setVisibility(View.GONE);
                     btStart.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_pause_24));
                 } else {
-                    tBuff += tMilliSec;
-                    handler.removeCallbacks(runnable);
-                    chronometer.stop();
-                    fuck = false;
+
+                    isRunning=false;
                     isResume = false;
+                    handler.removeCallbacks(runnable);
                     btStop.setVisibility(View.VISIBLE);
                     btStart.setImageDrawable(getResources().getDrawable(R.drawable.ic_play));
                 }
@@ -127,19 +113,22 @@ public class MainActivity3 extends AppCompatActivity {
         Intent i=new Intent();
 
         btStop.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                Log.d("ma3","btstop "+ String.valueOf(min));
+
                 if(!isResume){
-                    k= tUpdate+j*300000;
-//                    time=String.valueOf(k );
+
+
+                    k= (tUpdate*1000)+(j*300000);
+                    //                    time=String.valueOf(k );
                     i.putExtra("position", pos);
                     i.putExtra("uId", uId);
                     i.putExtra("time", k);
                     i.putExtra("sTime",sTime);
                     btStart.setImageDrawable(getResources().getDrawable(R.drawable.ic_play));
-                    tMilliSec=0L;
-                    tStart=0L;
-                    tBuff=0L;
+
                     tUpdate=0L;
                     sec=0;
                     min=0;
@@ -147,6 +136,8 @@ public class MainActivity3 extends AppCompatActivity {
                     chronometer.setText("00:00:00");
                     k=0;
                     j=0;
+                    handler.removeCallbacks(runnable);
+
                     setResult(RESULT_OK, i);
                     finish();
                 }
@@ -157,19 +148,28 @@ public class MainActivity3 extends AppCompatActivity {
     public Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            tMilliSec = SystemClock.uptimeMillis() - tStart;
-            tUpdate = tBuff + tMilliSec;
-            sec =  (tUpdate / 1000);
-            if(flag) {
-                sec += prev/1000;
-                flag=false;
+            Log.d("ma3","run "+ String.valueOf(min));
+
+            long temp ,temp2;
+            if(isRunning==true) tUpdate++;
+
+            hrs=hrs;
+            temp2=((tUpdate+min*60)/3600);
+            min=min;
+            temp=(tUpdate/60);
+
+            if(flg){
+                tUpdate+=sec;
+
+                flg=false;
             }
-            min = min+(sec / 60);
-            hrs = hrs+(min / 60);
-            sec = sec % 60;
-            sTime=String.format("%02d", hrs) + ":" + String.format("%02d", min) + ":" + String.format("%02d", sec);
+
+            sec = tUpdate % 60;
+
+
+            sTime = String.format("%02d", (hrs+temp2)%60) + ":" + String.format("%02d", (min+temp)%60) + ":" + String.format("%02d", sec);
             chronometer.setText(sTime);
-            handler.postDelayed(this, 60);
+            handler.postDelayed(this, 1000);
         }
     };
 }
