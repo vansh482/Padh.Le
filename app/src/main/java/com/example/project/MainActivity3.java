@@ -150,17 +150,15 @@ public class MainActivity3 extends AppCompatActivity {
                 sec = tUpdate % 60;
 
 
-
             sTime = String.format("%02d", (hrs+temp2)%60) + ":" + String.format("%02d", (min+temp)%60) + ":" + String.format("%02d", sec);
             chronometer.setText(sTime);
             handler.postDelayed(this, 1000);
         }
     };
 
-
     @Override
     public void onBackPressed() {
-        if(start_flag )
+        if (start_flag)
             Toast.makeText(this, "Please Stop the Timer", Toast.LENGTH_SHORT).show();
         else {
             my_func();
